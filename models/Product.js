@@ -1,3 +1,5 @@
+
+
 module.exports = (sequelize, DataTypes) => {
     const Product = sequelize.define("Product", {
         name: DataTypes.STRING,
@@ -10,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         timestamp: false
     })
     Product.associate = models => {
-        Product.belongsToMany(models.Order, { through: models.Order_Product, foreignKey: "product_id" });
+        Product.belongsToMany(models.Cart, {through:models.Order_Product , foreignKey: "product_id" });
     }
     return Product
 }

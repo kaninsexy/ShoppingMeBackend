@@ -5,6 +5,7 @@ const db = require("./models");
 const cors = require("cors");
 const UserRouter = require('./routes/User')
 const ProductRouter = require('./routes/Product')
+const CartRouter = require('./routes/Cart')
 const OrderRouter = require('./routes/Order')
 
 let allowedOrigins = ["http://localhost:3001", "http://localhost:3000"];
@@ -27,7 +28,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/user', UserRouter)
 app.use('/product', ProductRouter)
-app.use('/order', OrderRouter)
+app.use('/cart', CartRouter)
+app.use('/order',OrderRouter)
 
 db.sequelize.sync({ force: false }).then(() => {
     app.listen(process.env.PORT, () => {
