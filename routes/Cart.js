@@ -8,6 +8,8 @@ router.get('/', authentication, OrderController.getOrder)
 router.post('/OrderProduct', authentication, OrderController.selectOrder)
 router.put('/', authentication, OrderController.updateOrder)
 router.delete('/:id', authentication, OrderController.deleteOrder)
+router.delete('/all/', authentication, OrderController.deleteAllOrder)
+
 
 
 

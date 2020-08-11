@@ -7,6 +7,8 @@ const UserRouter = require('./routes/User')
 const ProductRouter = require('./routes/Product')
 const CartRouter = require('./routes/Cart')
 const OrderRouter = require('./routes/Order')
+const HistoryRouter = require('./routes/History')
+require('./passport')
 
 let allowedOrigins = ["http://localhost:3001", "http://localhost:3000"];
 
@@ -29,10 +31,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/user', UserRouter)
 app.use('/product', ProductRouter)
 app.use('/cart', CartRouter)
-app.use('/order',OrderRouter)
+app.use('/order', OrderRouter)
+app.use('/history', HistoryRouter)
 
 db.sequelize.sync({ force: false }).then(() => {
     app.listen(process.env.PORT, () => {
         console.log(`Server is running at ${process.env.PORT}`);
     });
 });
+ 

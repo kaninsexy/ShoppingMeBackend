@@ -12,7 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         timestamp: false
     })
     Product.associate = models => {
-        Product.belongsToMany(models.Cart, {through:models.Order_Product , foreignKey: "product_id" });
+        
+        Product.hasMany(models.Cart,{  foreignKey: 'product_id' })
+       
     }
     return Product
 }

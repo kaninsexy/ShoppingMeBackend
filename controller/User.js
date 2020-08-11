@@ -30,10 +30,11 @@ const login = async (req, res) => {
     if (!targetUser) {
         res.status(400).send({ message: "Username or password is wrong." })
     } else {
+        // console.log(targetUser)
         const isPWCorrect = bc.compareSync(password, targetUser.password)
         if (isPWCorrect) {
             const payload = { id: targetUser.id, name: targetUser.name };
-            const token = jwt.sign(payload, process.env.SECRET, { expiresIn: 3600 })
+            const token = jwt.sign(payload, process.env.SECRET, { expiresIn: 36000 })
 
             res.status(200).send({
                 message: "Successfully login",
