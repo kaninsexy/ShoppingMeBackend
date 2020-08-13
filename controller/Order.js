@@ -8,17 +8,20 @@ const getOrder = async (req, res) => {
     } catch (err) {
         console.log(err.message)
     }
-    
+
 }
 
 
 const inputOrder = async (req, res) => {
-    const {total_price} =  req.body;
-    const newOrders = await db.Order.create({total_price})
+    const { total_price } = req.body;
+    const newOrders = await db.Order.create(
+        total_price,
+        id
+    )
     res.status(200).send(newOrders)
 }
 
 module.exports = {
-    inputOrder, 
+    inputOrder,
     getOrder
 }

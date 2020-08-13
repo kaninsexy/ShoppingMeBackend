@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     })
     User.associate = models => {
         User.hasOne(models.Cart, { foreignKey: "user_id" });
+        User.hasOne(models.HistoryProduct, { foreignKey: "user_id" });
     }
     return User
 }

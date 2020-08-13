@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, DataTypes) => {
     const Order = sequelize.define("Order", {
-        total_price: DataTypes.FLOAT
+        total_price: DataTypes.FLOAT,
     }, {
         tableName: "order"
     })

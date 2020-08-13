@@ -3,21 +3,22 @@ let id = 1
 const db = require('../models')
 
 const getOrder = async (req, res) => {
-    const user_id = req.user.id
-    const targetOrder = await db.Cart.findAll({ include: {model: db.Product}})
+    console.log(req.user)
+    const targetOrder = await db.Cart.findAll({ include: { model: db.Product }, where: { user_id: req.user.id } })
+    // const targetOrder = await db.Cart.findAll({ where: {user_id: req.user.id}})
     res.status(200).send(targetOrder)
 }
 
 const selectOrder = async (req, res) => {
-    const user_id = req.user.id
+    // const user_id = req.user.id
 
     const { amount, product_id } = req.body
     console.log(amount)
     console.log(product_id)
     const newOrder = await db.Cart.create({
+        user_id: req.user.id,
         amount,
         product_id,
-        user_id
     })
 
         .catch(err => { console.log(err.message) })
@@ -25,18 +26,17 @@ const selectOrder = async (req, res) => {
 }
 
 const updateOrder = async (req, res) => {
-    const { amount, id } = req.body
-    console.log(amount)
-    // console.log(product_id)
-    const updateOrder = await db.Cart.findOne({ where: { id } })
-        .catch(err => (console.log(err.message)))
-
+    const { amount, id, item } = req.body
+    console.log(req.body)
+    const updateOrder = await db.Cart.findOne({ where: { product_id: id, user_id: req.user.id } });
+    
+    console.log(updateOrder)
     if (updateOrder) {
-        await updateOrder.update({ amount })
-            .catch(err => (console.log(err.message)))
+        await updateOrder.update({ amount: updateOrder.amount + amount });
         res.status(200).send(updateOrder)
     } else {
-        res.status(404).send({ message: `Todo ID : ${updateOrder} is not found` })
+        const newOrder = await db.Cart.create({...item, amount: 1, user_id: req.user.id, product_id: id})
+        res.status(200).send(newOrder)
     }
 
 }
@@ -52,16 +52,10 @@ const deleteOrder = async (req, res) => {
     }
 }
 
-const deleteAllOrder =  (req,res) => {
-    console.log("delete aii")
-    // const targetDelete = await db.Cart.findAll()
-    // if (targetDelete) {
-    //     await targetDelete.destroy()
-    //     res.status(204).send({ message: `delete Cart: ${targetDelete} is deleted` })
-    // } else {
-    //     res.status(404).send({ message: `Todo ID : ${targetTodoId} is not found` })
-    // }
-res.send("delete")
+const deleteAllOrder = async (req, res) => {
+    await db.Cart.destroy({ where: { user_id: req.user.id } })
+    res.status(204).send({ message: `delete Cart: is deleted` })
+    // res.send("delete")
 }
 
 
