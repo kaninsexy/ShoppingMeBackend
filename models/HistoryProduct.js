@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     HistoryProduct.associate = models => {
         HistoryProduct.belongsTo(models.User,{foreignKey : 'user_id'})
         HistoryProduct.belongsTo(models.Order,{foreignKey : 'order_id'})
+        HistoryProduct.belongsTo(models.Product,{foreignKey : 'product_id'})
     }
 
     return HistoryProduct

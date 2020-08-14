@@ -1,7 +1,14 @@
 const db = require("../models")
+const {Op} = require('sequelize')
 
 const getAllProduct = async (req, res) => {
-    const productAll = await db.Product.findAll()
+    const {name, category} = req.query
+    const whereProductName = {}
+    if (name) {
+        whereProductName.name = {[Op.like] : `%${name}%`}
+    }
+    const whereObj = {where: {...whereProductName}};
+    const productAll = await db.Product.findAll(whereObj)
     res.status(200).send(productAll)
 }
 
