@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "091213873",
-    "database": "Amazona_dataBase",
+    "password": "Siamese#1",
+    "database": "ShopMeUp",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
